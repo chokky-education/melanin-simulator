@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Knowledge Hub | UV &amp; Melanin Simulator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "outline": "#76777d",
+                    "secondary-fixed": "#ffddb8",
+                    "surface-bright": "#f7f9fb",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-high": "#e6e8ea",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#dae2fd",
+                    "on-secondary-fixed": "#2a1700",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#e0e3e5",
+                    "on-surface": "#191c1e",
+                    "inverse-surface": "#2d3133",
+                    "surface-dim": "#d8dadc",
+                    "on-surface-variant": "#45464d",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary": "#855300",
+                    "primary": "#000000",
+                    "outline-variant": "#c6c6cd",
+                    "on-primary-container": "#7c839b",
+                    "primary-container": "#131b2e",
+                    "surface-tint": "#565e74",
+                    "on-tertiary-fixed-variant": "#005049",
+                    "secondary-container": "#fea619",
+                    "on-secondary-container": "#684000",
+                    "tertiary-container": "#00201d",
+                    "error-container": "#ffdad6",
+                    "surface": "#f7f9fb",
+                    "tertiary": "#000000",
+                    "inverse-primary": "#bec6e0",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed": "#131b2e",
+                    "tertiary-fixed": "#89f5e7",
+                    "surface-container": "#eceef0",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-lg": "32px",
+                    "gutter": "16px",
+                    "container-padding": "24px",
+                    "unit": "4px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "title-md": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "headline-lg-mobile": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "title-md": ["20px", {"lineHeight": "1.5", "fontWeight": "600"}],
+                    "label-sm": ["13px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f7f9fb;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            color: #191c1e;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .gradient-track {
+            background: linear-gradient(to right, #eceef0, #fea619);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="bg-surface-container-lowest shadow-sm sticky top-0 z-50">
+<nav class="flex justify-between items-center px-container-padding py-stack-md w-full max-w-7xl mx-auto">
+<div class="font-display-lg text-display-lg font-bold text-primary">
+                UV &amp; Melanin Simulator
+            </div>
+<div class="hidden md:flex items-center gap-stack-lg">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Simulator</a>
+<a class="font-body-md text-body-md text-primary font-bold border-b-2 border-primary pb-1" href="#">Knowledge Hub</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">About</a>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-sm text-label-sm active:scale-95 duration-150 ease-in-out transition-all">
+                Sign In
+            </button>
+</nav>
+</header>
+<main class="flex-grow w-full max-w-7xl mx-auto px-container-padding py-stack-lg">
+<!-- Hero Section & Search -->
+<section class="mb-stack-lg">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-stack-md mb-8">
+<div>
+<h1 class="font-headline-lg text-headline-lg mb-2">ศูนย์การเรียนรู้เรื่องรังสียูวีและเมลานิน</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                        เจาะลึกวิทยาศาสตร์เบื้องหลังการปกป้องผิว ความเข้าใจเกี่ยวกับรังสีอัลตราไวโอเลต และบทบาทสำคัญของเมลานินในการรักษาความสมบูรณ์ของเซลล์
+                    </p>
+</div>
+<div class="relative w-full md:w-80">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-3 rounded-xl border-outline-variant bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:border-transparent transition-all font-body-md" placeholder="ค้นหาหัวข้อ..." type="text"/>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-stack-lg">
+<!-- Left Column: Educational Articles (Main Content) -->
+<div class="lg:col-span-8 space-y-stack-lg">
+<!-- Article Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<!-- Major Article 1 -->
+<div class="md:col-span-2 group cursor-pointer bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
+<div class="flex flex-col md:flex-row h-full">
+<div class="md:w-1/2 h-64 md:h-auto overflow-hidden">
+<div class="bg-cover bg-center w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="A scientific medical illustration of the human skin layers showing UVA and UVB rays penetrating at different depths. The visual uses a professional clinical aesthetic with clean lines and soft gradients of light orange and deep navy, highlighting the dermis and epidermis sections clearly." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBrgEpr8zrFwXCDAoCDSfGy6kiiZ6kwGajlPMNUt2O83pmIp8a_8Mjw26ETig_h9emmX_06FiI-9-K7OcvnFziAiHRQHu9yt4toz0y9ddURyOiGqy5jh5T75TU-fL471d4_gT1XeZb27HZUWLH30z-nVz_wtgNY14MbozvPgvUcQjNEmz_m6bJgcl3RBoVYsbrXHSD9MC6hBlBBoaFqttO6mowtuvn9tAd9YWijY4dTj-95BXQ2Jr9S')"></div>
+</div>
+<div class="md:w-1/2 p-stack-lg flex flex-col justify-center">
+<span class="text-secondary font-label-sm text-label-sm mb-2">วิทยาศาสตร์รังสี</span>
+<h2 class="font-title-md text-title-md mb-3 group-hover:text-secondary transition-colors">ความแตกต่างระหว่าง UVA และ UVB</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">
+                                    ทำความเข้าใจความยาวคลื่นของรังสีแต่ละประเภท และวิธีการที่รังสีเหล่านี้ส่งผลกระทบต่อผิวหนังของคุณในระดับลึก
+                                </p>
+<button class="flex items-center gap-2 font-label-sm text-label-sm text-primary font-bold">
+                                    อ่านเพิ่มเติม <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Article 2 -->
+<div class="group cursor-pointer bg-surface-container-lowest rounded-xl p-stack-md shadow-sm hover:shadow-md transition-all">
+<div class="h-48 rounded-lg mb-4 overflow-hidden">
+<div class="bg-cover bg-center w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="A detailed microscopic 3D render of melanocytes releasing melanin granules into neighboring skin cells. The aesthetic is clean and biological, featuring deep amber tones for melanin and soft pearlescent white for cellular structures, set against a calm clinical light blue background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCHs3htzd9CvxKuZcEEDXlJ6qLH-40Q9rgPC2gmqyTUQH3NBliwPCGlpn0t2bnveVrxFw5KUjvxS_4khmxlczwu_Gm4IB_J6My_DXiK8KRbUaexRLL_H3fDoSUCRMXLnTsDFOlz4IzkUltwNk6r59WyLsori85_Vwy-Ym0h8oQZTr2pmmVsXDy6C9gPWYlv2SVbfMtoXrHQZ3nHPVKt7gRI3LMChVzOFpde6c-gKqmcW3yKEqetTbOm')"></div>
+</div>
+<h3 class="font-title-md text-title-md mb-2">บทบาทของเมลานิน</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">
+                            เมลานินไม่ได้มีไว้เพื่อกำหนดสีผิวเพียงอย่างเดียว แต่ยังเป็นเกราะป้องกันทางชีวภาพที่สำคัญที่สุดของร่างกายมนุษย์
+                        </p>
+</div>
+<!-- Article 3 -->
+<div class="group cursor-pointer bg-surface-container-lowest rounded-xl p-stack-md shadow-sm hover:shadow-md transition-all">
+<div class="h-48 rounded-lg mb-4 overflow-hidden">
+<div class="bg-cover bg-center w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="A lifestyle photograph of modern mineral sunscreens and protective clothing organized neatly on a wooden surface with soft sunlight filtering through. The mood is calm and informative, emphasizing high-quality skin care through a warm, high-key photography style with gold and teal accents." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC_r_m79gEiPI-rrm6XGa0WvUHJ60w96QZJX7Q6ch4sCnuOgJ_b9oH_AhavJvf7d9cPx-8Akj20PghB9Fby9j0F1qgpqeRqRIfcHlFux92ORHNFAAdAo4wyUsXa7DH1Uab1y0tctOc8P2hMTwwNADXy468NUKOExEk9JHwHfNtnO2g9sDyiBqskcHyTtc44mo_RHY31g7VV7KI2TZuK02LHqhFLEyVvlmu-cvpAcZ86llJW5HTRUHRG')"></div>
+</div>
+<h3 class="font-title-md text-title-md mb-2">การดูแลผิวจากแสงแดด</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">
+                            เทคนิคการเลือกใช้ครีมกันแดดอย่างถูกวิธี และการใช้อุปกรณ์ป้องกันภายนอกเพื่อลดความเสี่ยงจากโรคผิวหนัง
+                        </p>
+</div>
+</div>
+<!-- Academic References Section -->
+<div class="bg-surface-container-low rounded-xl p-stack-lg">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">menu_book</span>
+<h3 class="font-title-md text-title-md">เอกสารอ้างอิงทางวิชาการ</h3>
+</div>
+<ul class="space-y-4">
+<li class="flex flex-col border-b border-outline-variant pb-4 last:border-0 last:pb-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">2023 | World Dermatology Journal</span>
+<span class="font-body-md text-body-md font-medium">The Impact of UVR on Melanin Synthesis in SE Asian Phenotypes</span>
+<a class="text-primary hover:underline text-sm mt-1" href="#">DOI: 10.1016/j.wdj.2023.04.01</a>
+</li>
+<li class="flex flex-col border-b border-outline-variant pb-4 last:border-0 last:pb-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">2021 | Clinical Photobiology</span>
+<span class="font-body-md text-body-md font-medium">Photoprotective mechanisms of Eumelanin vs Pheomelanin</span>
+<a class="text-primary hover:underline text-sm mt-1" href="#">DOI: 10.1111/cpb.12944</a>
+</li>
+<li class="flex flex-col border-b border-outline-variant pb-4 last:border-0 last:pb-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">2022 | Thai Medical Association Journal</span>
+<span class="font-body-md text-body-md font-medium">Sun Protection Behaviors and UV Awareness in Urban Thailand</span>
+<a class="text-primary hover:underline text-sm mt-1" href="#">Ref: TMAJ-2022-482</a>
+</li>
+</ul>
+</div>
+</div>
+<!-- Right Column: Interactive Elements (Fixed Panel Style) -->
+<aside class="lg:col-span-4 space-y-stack-lg">
+<!-- UV Penetration Visualization Box -->
+<div class="bg-primary-container text-on-primary rounded-xl p-stack-lg overflow-hidden relative shadow-lg">
+<h3 class="font-title-md text-title-md mb-6 relative z-10 text-on-primary">การส่องผ่านของรังสียูวี</h3>
+<!-- Diagram Container -->
+<div class="relative h-64 w-full bg-white/5 rounded-lg p-4 z-10 border border-white/10 glass-card">
+<div class="flex h-full gap-4 items-end justify-around">
+<!-- UVB Line -->
+<div class="relative w-12 flex flex-col items-center group">
+<div class="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity bg-secondary-container text-on-secondary-container px-2 py-1 rounded text-xs font-bold">Epidermis</div>
+<div class="w-2 h-32 bg-secondary-container rounded-t-full relative">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 text-xs font-bold">UVB</div>
+<div class="absolute bottom-0 w-full h-full bg-white/20 animate-pulse"></div>
+</div>
+<span class="text-[10px] mt-2 opacity-60">ชั้นหนังกำพร้า</span>
+</div>
+<!-- UVA Line -->
+<div class="relative w-12 flex flex-col items-center group">
+<div class="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity bg-error-container text-on-error-container px-2 py-1 rounded text-xs font-bold">Dermis</div>
+<div class="w-2 h-48 bg-error-container rounded-t-full relative">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 text-xs font-bold">UVA</div>
+<div class="absolute bottom-0 w-full h-full bg-white/20 animate-pulse"></div>
+</div>
+<span class="text-[10px] mt-2 opacity-60">ชั้นหนังแท้</span>
+</div>
+<!-- Protection Overlay -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="border-2 border-dashed border-tertiary-fixed/30 w-full h-24 mt-12 rounded-lg flex items-start justify-end p-2">
+<span class="text-[10px] font-bold text-tertiary-fixed">SPF Protection Zone</span>
+</div>
+</div>
+</div>
+</div>
+<p class="font-label-sm text-label-sm mt-4 opacity-70 relative z-10">
+                        * UVA มีความยาวคลื่นที่ยาวกว่าและสามารถทะลุลงไปถึงชั้นหนังแท้ ทำลายคอลลาเจนและอีลาสติน
+                    </p>
+</div>
+<!-- Related Tools Card -->
+<div class="bg-surface-container-highest rounded-xl p-stack-lg border border-outline-variant/30">
+<h3 class="font-title-md text-title-md mb-4">เครื่องมือช่วยคำนวณ</h3>
+<div class="space-y-3">
+<button class="w-full flex items-center justify-between p-3 bg-surface-container-lowest rounded-lg hover:bg-primary-container hover:text-on-primary transition-all group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary group-hover:text-secondary-fixed">wb_sunny</span>
+<span class="font-body-md">UV Index Calculator</span>
+</div>
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 bg-surface-container-lowest rounded-lg hover:bg-primary-container hover:text-on-primary transition-all group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary group-hover:text-secondary-fixed">palette</span>
+<span class="font-body-md">Fitzpatrick Scale Test</span>
+</div>
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Quick Tips -->
+<div class="bg-secondary-fixed rounded-xl p-stack-lg border border-on-secondary-container/10">
+<h4 class="font-label-sm text-label-sm font-bold text-on-secondary-container mb-2 uppercase tracking-wider">เกร็ดความรู้ด่วน</h4>
+<p class="font-body-md text-on-secondary-fixed-variant italic">
+                        "แม้ในวันที่เมฆมาก รังสียูวีสามารถส่องผ่านชั้นเมฆลงมาได้ถึง 80% การป้องกันผิวจึงควรทำเป็นกิจวัตรในทุกๆ วัน"
+                    </p>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low mt-stack-lg">
+<div class="flex flex-col md:flex-row justify-between items-center px-container-padding py-stack-lg w-full max-w-7xl mx-auto">
+<div class="flex flex-col mb-4 md:mb-0">
+<div class="font-title-md text-title-md text-primary font-bold mb-2">UV &amp; Melanin Hub</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant max-w-md">
+                    © 2024 UV &amp; Melanin Educational Simulator. เครื่องมือนี้มีวัตถุประสงค์เพื่อการศึกษาเท่านั้น ไม่ใช่เพื่อการวินิจฉัยทางการแพทย์
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-stack-md">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors hover:underline" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors hover:underline" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors hover:underline" href="#">Contact Support</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple search interactivity
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            // In a real app, this would filter results. 
+            // For now, we'll just log the interaction.
+            if(val.length > 2) {
+                console.log('Searching for:', val);
+            }
+        });
+
+        // Add micro-interaction to cards
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Subtle scale effect managed via Tailwind classes
+            });
+        });
+    </script>
+</body></html>

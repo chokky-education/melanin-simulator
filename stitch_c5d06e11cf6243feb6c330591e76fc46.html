@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>UV &amp; Melanin Simulator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .skin-layer-epidermis {
+            background: linear-gradient(180deg, #fceae1 0%, #f7d7c4 100%);
+        }
+        .skin-layer-dermis {
+            background: linear-gradient(180deg, #f7d7c4 0%, #eac0a8 100%);
+        }
+        .uv-ray {
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #e2e8f0;
+            border-radius: 4px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #131b2e;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .pulse-warning {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#ffffff",
+                      "on-secondary-fixed-variant": "#653e00",
+                      "outline": "#76777d",
+                      "secondary-fixed": "#ffddb8",
+                      "surface-bright": "#f7f9fb",
+                      "surface-container-low": "#f2f4f6",
+                      "surface-container-high": "#e6e8ea",
+                      "on-error-container": "#93000a",
+                      "primary-fixed": "#dae2fd",
+                      "on-secondary-fixed": "#2a1700",
+                      "error": "#ba1a1a",
+                      "surface-variant": "#e0e3e5",
+                      "on-surface": "#191c1e",
+                      "inverse-surface": "#2d3133",
+                      "surface-dim": "#d8dadc",
+                      "on-primary-container": "#7c839b",
+                      "on-tertiary-container": "#0c9488",
+                      "primary-container": "#131b2e",
+                      "surface-tint": "#565e74",
+                      "on-tertiary-fixed-variant": "#005049",
+                      "surface-container-highest": "#e0e3e5",
+                      "secondary": "#855300",
+                      "primary": "#000000",
+                      "outline-variant": "#c6c6cd",
+                      "on-surface-variant": "#45464d",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed-dim": "#6bd8cb",
+                      "secondary-fixed-dim": "#ffb95f",
+                      "on-tertiary-fixed": "#00201d",
+                      "on-background": "#191c1e",
+                      "primary-fixed-dim": "#bec6e0",
+                      "on-tertiary": "#ffffff",
+                      "background": "#f7f9fb",
+                      "inverse-on-surface": "#eff1f3",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed-variant": "#3f465c",
+                      "secondary-container": "#fea619",
+                      "on-secondary-container": "#684000",
+                      "tertiary-container": "#00201d",
+                      "error-container": "#ffdad6",
+                      "surface": "#f7f9fb",
+                      "tertiary": "#000000",
+                      "inverse-primary": "#bec6e0",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed": "#131b2e",
+                      "tertiary-fixed": "#89f5e7",
+                      "surface-container": "#eceef0"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-lg": "32px",
+                      "gutter": "16px",
+                      "container-padding": "24px",
+                      "unit": "4px",
+                      "stack-sm": "8px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Be Vietnam Pro"],
+                      "body-md": ["Be Vietnam Pro"],
+                      "headline-lg": ["Be Vietnam Pro"],
+                      "title-md": ["Be Vietnam Pro"],
+                      "label-sm": ["Be Vietnam Pro"],
+                      "body-lg": ["Be Vietnam Pro"],
+                      "headline-lg-mobile": ["Be Vietnam Pro"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "title-md": ["20px", {"lineHeight": "1.5", "fontWeight": "600"}],
+                      "label-sm": ["13px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<nav class="bg-surface-container-lowest dark:bg-primary-container shadow-sm sticky top-0 z-50">
+<div class="flex justify-between items-center px-container-padding py-stack-md w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">flare</span>
+<span class="font-display-lg text-display-lg font-bold text-primary dark:text-on-primary-container">UV &amp; Melanin Simulator</span>
+</div>
+<div class="hidden md:flex items-center gap-gutter">
+<a class="text-primary dark:text-tertiary-fixed font-bold border-b-2 border-primary dark:border-tertiary-fixed pb-1 font-body-md text-body-md" href="#">Simulator</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Knowledge Hub</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">About</a>
+<button class="bg-primary text-on-primary px-gutter py-stack-sm rounded-full active:scale-95 duration-150 ease-in-out font-body-md">Sign In</button>
+</div>
+</div>
+</nav>
+<!-- Main Dashboard -->
+<main class="flex-grow max-w-7xl w-full mx-auto p-container-padding grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Sidebar: Controls -->
+<aside class="lg:col-span-4 flex flex-col gap-gutter h-full">
+<div class="bg-surface-container-lowest p-stack-lg rounded-xl shadow-sm flex flex-col gap-stack-lg border border-outline-variant">
+<div class="flex items-center gap-stack-sm border-b border-outline-variant pb-stack-sm">
+<span class="material-symbols-outlined text-secondary">tune</span>
+<h2 class="font-title-md text-title-md text-on-surface">กำหนดสถานการณ์</h2>
+</div>
+<!-- Sliders Group -->
+<div class="space-y-stack-lg">
+<!-- UV Level -->
+<div class="space-y-stack-sm">
+<div class="flex justify-between items-center">
+<label class="font-label-sm text-label-sm text-on-surface-variant">ระดับรังสี UV (UV Index)</label>
+<span class="text-primary font-bold" id="uv-val">5</span>
+</div>
+<input class="accent-primary" id="uv-slider" max="11" min="1" type="range" value="5"/>
+<div class="flex justify-between text-[10px] text-outline font-medium">
+<span>ต่ำ</span>
+<span>ปานกลาง</span>
+<span>สูงมาก</span>
+</div>
+</div>
+<!-- UVA/UVB Ratio -->
+<div class="space-y-stack-sm">
+<div class="flex justify-between items-center">
+<label class="font-label-sm text-label-sm text-on-surface-variant">สัดส่วน UVA / UVB</label>
+<span class="text-primary font-bold" id="ratio-val">50:50</span>
+</div>
+<input class="accent-secondary-container" id="ratio-slider" max="100" min="0" type="range" value="50"/>
+</div>
+<!-- Base Melanin -->
+<div class="space-y-stack-sm">
+<div class="flex justify-between items-center">
+<label class="font-label-sm text-label-sm text-on-surface-variant">ระดับเมลานินพื้นฐาน (Skin Tone)</label>
+<span class="text-primary font-bold" id="melanin-val">Type III</span>
+</div>
+<input class="accent-primary-container" id="melanin-slider" max="6" min="1" type="range" value="3"/>
+</div>
+</div>
+<!-- Protection Behaviors -->
+<div class="space-y-stack-md pt-stack-md border-t border-outline-variant">
+<h3 class="font-label-sm text-label-sm font-bold uppercase tracking-wider text-on-surface-variant">พฤติกรรมป้องกัน</h3>
+<div class="grid grid-cols-1 gap-stack-sm">
+<button class="flex items-center justify-between p-stack-sm rounded-lg border border-outline-variant bg-surface-container-low hover:bg-surface-container-high transition-all group" data-active="false" onclick="toggleProtection(this)">
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-tertiary-container">sanitizer</span>
+<span class="font-body-md text-body-md">ทาครีมกันแดด (SPF 50+)</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant opacity-0 check-icon">check_circle</span>
+</button>
+<button class="flex items-center justify-between p-stack-sm rounded-lg border border-outline-variant bg-surface-container-low hover:bg-surface-container-high transition-all group" data-active="false" onclick="toggleProtection(this)">
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-tertiary-container">checkroom</span>
+<span class="font-body-md text-body-md">สวมเสื้อผ้าแขนยาว</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant opacity-0 check-icon">check_circle</span>
+</button>
+<button class="flex items-center justify-between p-stack-sm rounded-lg border border-outline-variant bg-surface-container-low hover:bg-surface-container-high transition-all group" data-active="false" onclick="toggleProtection(this)">
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-tertiary-container">event_busy</span>
+<span class="font-body-md text-body-md">เลี่ยงช่วงแดดจัด (11:00 - 15:00)</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant opacity-0 check-icon">check_circle</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Stats Card -->
+<div class="bg-primary-container p-stack-lg rounded-xl text-on-primary shadow-lg overflow-hidden relative">
+<div class="relative z-10">
+<h3 class="font-title-md text-title-md mb-stack-sm">สรุปสถานะการป้องกัน</h3>
+<div class="flex items-end gap-stack-sm">
+<span class="text-4xl font-bold" id="protection-score">24%</span>
+<span class="font-label-sm text-label-sm opacity-80 mb-1">ความปลอดภัยโดยรวม</span>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-9xl">shield</span>
+</div>
+</div>
+</aside>
+<!-- Main Center: Visualization Canvas -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<!-- Canvas Area -->
+<div class="flex-grow bg-white rounded-2xl shadow-xl border border-outline-variant overflow-hidden flex flex-col relative min-h-[450px]">
+<!-- Visualization Header -->
+<div class="p-stack-md flex justify-between items-center bg-surface-container-low border-b border-outline-variant">
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-primary">biotech</span>
+<h2 class="font-title-md text-title-md">การวิเคราะห์ชั้นผิวหนัง</h2>
+</div>
+<div class="flex gap-stack-sm">
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">warning</span> ความเสี่ยง: <span id="risk-level">ปานกลาง</span>
+</span>
+</div>
+</div>
+<!-- Interactive Skin Model -->
+<div class="flex-grow flex items-center justify-center relative p-stack-lg bg-slate-50">
+<!-- Rays Animation -->
+<div class="absolute top-0 left-0 w-full h-full flex justify-around px-20 pointer-events-none z-20">
+<div class="w-1 bg-gradient-to-b from-yellow-400 to-transparent uv-ray h-1/2 opacity-60"></div>
+<div class="w-1 bg-gradient-to-b from-yellow-500 to-transparent uv-ray h-2/3 opacity-80"></div>
+<div class="w-1 bg-gradient-to-b from-orange-400 to-transparent uv-ray h-1/3 opacity-50"></div>
+<div class="w-1 bg-gradient-to-b from-yellow-400 to-transparent uv-ray h-3/4 opacity-70"></div>
+<div class="w-1 bg-gradient-to-b from-yellow-600 to-transparent uv-ray h-2/5 opacity-60"></div>
+</div>
+<!-- Skin Layers Section -->
+<div class="w-full max-w-2xl flex flex-col gap-1 relative z-10">
+<!-- Epidermis -->
+<div class="h-48 skin-layer-epidermis rounded-t-2xl p-stack-md border-x border-t border-outline-variant shadow-inner flex flex-col justify-between relative group overflow-hidden">
+<div class="flex justify-between items-start">
+<span class="bg-white/50 px-2 py-1 rounded text-xs font-bold uppercase">ชั้นกำพร้า (Epidermis)</span>
+<div class="text-right">
+<p class="font-label-sm text-[10px] text-on-surface-variant">Melanin Density</p>
+<div class="h-2 w-24 bg-white/30 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-orange-900 w-1/3 transition-all duration-500" id="melanin-bar"></div>
+</div>
+</div>
+</div>
+<!-- Melanin Particles -->
+<div class="absolute inset-0 pointer-events-none opacity-40 grid grid-cols-12 gap-2 p-8" id="melanin-particles">
+<!-- Dynamic dots via JS -->
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant/80 max-w-[200px]">UVA ส่องผ่านได้ลึก ส่วน UVB ถูกดูดซับบางส่วน</p>
+</div>
+<!-- Dermis -->
+<div class="h-64 skin-layer-dermis rounded-b-2xl p-stack-md border-x border-b border-outline-variant shadow-inner flex flex-col justify-start relative group">
+<span class="bg-white/30 px-2 py-1 rounded text-xs font-bold uppercase self-start mb-stack-sm">ชั้นหนังแท้ (Dermis)</span>
+<div class="space-y-stack-sm mt-stack-lg">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">water_drop</span>
+<span class="text-xs">Collagen Fibers</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">stream</span>
+<span class="text-xs">Elastic Fibers</span>
+</div>
+</div>
+<!-- Damage Indicator Overlay -->
+<div class="absolute inset-0 bg-red-500/0 transition-all duration-700 pointer-events-none" id="damage-overlay"></div>
+</div>
+</div>
+<!-- Overlay Data Panels -->
+<div class="absolute right-stack-lg top-1/2 -translate-y-1/2 flex flex-col gap-stack-sm">
+<div class="glass-panel p-stack-sm rounded-lg border border-outline-variant shadow-md w-40">
+<p class="text-[10px] font-bold text-outline uppercase tracking-tighter">UVA Penetration</p>
+<p class="text-title-md font-bold text-primary" id="uva-penetration">65%</p>
+</div>
+<div class="glass-panel p-stack-sm rounded-lg border border-outline-variant shadow-md w-40">
+<p class="text-[10px] font-bold text-outline uppercase tracking-tighter">UVB Impact</p>
+<p class="text-title-md font-bold text-secondary" id="uvb-penetration">22%</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom: Quick Facts & Education -->
+<div class="bg-surface-container-low p-stack-lg rounded-xl border border-outline-variant">
+<div class="flex flex-col md:flex-row gap-stack-lg items-center">
+<div class="flex-shrink-0 bg-white p-stack-md rounded-full border-4 border-primary-fixed shadow-sm">
+<span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md text-primary mb-1">เกร็ดความรู้สำหรับคุณ</h4>
+<p class="font-body-md text-body-md text-on-surface-variant" id="dynamic-fact">
+                            เมื่อระดับรังสี UV สูงเกินระดับ 3 เมลานินในผิวของคุณจะเริ่มทำงานเพื่อปกป้อง DNA ในเซลล์ แต่การสะสมของ UVA เป็นเวลานานอาจทำให้เส้นใยคอลลาเจนเสื่อมสภาพ นำไปสู่ริ้วรอยก่อนวัยได้
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-container-highest mt-stack-lg">
+<div class="flex flex-col md:flex-row justify-between items-center px-container-padding py-stack-lg w-full max-w-7xl mx-auto">
+<div class="mb-stack-md md:mb-0">
+<span class="font-title-md text-title-md text-primary">UV &amp; Melanin Simulator</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant max-w-md mt-2">© 2024 UV &amp; Melanin Educational Simulator. This tool is for educational purposes only and does not provide medical diagnosis.</p>
+</div>
+<div class="flex gap-gutter">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:underline font-label-sm text-label-sm" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:underline font-label-sm text-label-sm" href="#">Terms of Service</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:underline font-label-sm text-label-sm" href="#">Contact Support</a>
+</div>
+</div>
+</footer>
+<script>
+        const uvSlider = document.getElementById('uv-slider');
+        const ratioSlider = document.getElementById('ratio-slider');
+        const melaninSlider = document.getElementById('melanin-slider');
+        
+        const uvVal = document.getElementById('uv-val');
+        const ratioVal = document.getElementById('ratio-val');
+        const melaninVal = document.getElementById('melanin-val');
+        
+        const melaninBar = document.getElementById('melanin-bar');
+        const riskLevel = document.getElementById('risk-level');
+        const protectionScore = document.getElementById('protection-score');
+        const factText = document.getElementById('dynamic-fact');
+        const damageOverlay = document.getElementById('damage-overlay');
+
+        const skinTypes = [
+            "Type I: ผิวขาวมาก เผาไหม้ง่าย",
+            "Type II: ผิวขาว เผาไหม้ง่าย คล้ำเล็กน้อย",
+            "Type III: ผิวขาวเหลือง เผาไหม้ปานกลาง",
+            "Type IV: ผิวสองสี เผาไหม้ยาก คล้ำง่าย",
+            "Type V: ผิวสีน้ำตาลเข้ม คล้ำง่ายมาก",
+            "Type VI: ผิวสีเข้มมาก"
+        ];
+
+        const facts = [
+            "UVA สามารถทะลุผ่านกระจกและก้อนเมฆได้ 95% แม้ในวันที่ไม่มีแดดจัด",
+            "การทาครีมกันแดด SPF 50+ ช่วยบล็อก UVB ได้กว่า 98% แต่ต้องทาในปริมาณที่เหมาะสม",
+            "เมลานินคือเม็ดสีธรรมชาติที่ช่วยปกป้องผิวจากแสงแดด คนที่มีผิวเข้มจึงมีความเสี่ยงโรคมะเร็งผิวน้อยกว่า",
+            "ค่า UV Index สูงสุดในช่วง 11:00 - 15:00 น. ควรหลีกเลี่ยงการออกแดดโดยตรง",
+            "UVB เป็นสาเหตุหลักของผิวไหม้แดด (Sunburn) ขณะที่ UVA ทำลายลึกถึงชั้นหนังแท้"
+        ];
+
+        function updateSimulation() {
+            const uv = parseInt(uvSlider.value);
+            const ratio = parseInt(ratioSlider.value);
+            const melanin = parseInt(melaninSlider.value);
+            
+            // Text Updates
+            uvVal.innerText = uv;
+            ratioVal.innerText = `${100 - ratio}:${ratio}`;
+            melaninVal.innerText = skinTypes[melanin-1].split(":")[0];
+            
+            // Visual Updates
+            const rays = document.querySelectorAll('.uv-ray');
+            rays.forEach((ray, idx) => {
+                const baseHeight = (uv * 8) + (idx * 5);
+                ray.style.height = `${Math.min(baseHeight, 100)}%`;
+                ray.style.opacity = uv / 11;
+            });
+
+            melaninBar.style.width = `${(melanin / 6) * 100}%`;
+            
+            // Risk Calculation logic
+            let baseRisk = uv * 10;
+            const activeProtections = document.querySelectorAll('[data-active="true"]').length;
+            const finalRisk = Math.max(0, baseRisk - (activeProtections * 25));
+            
+            protectionScore.innerText = `${activeProtections * 33}%`;
+
+            if (finalRisk < 30) {
+                riskLevel.innerText = "ต่ำ";
+                riskLevel.parentElement.className = "px-3 py-1 rounded-full bg-tertiary-container text-on-tertiary-fixed-variant font-label-sm text-label-sm flex items-center gap-1";
+                damageOverlay.style.backgroundColor = "rgba(239, 68, 68, 0)";
+            } else if (finalRisk < 70) {
+                riskLevel.innerText = "ปานกลาง";
+                riskLevel.parentElement.className = "px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm flex items-center gap-1";
+                damageOverlay.style.backgroundColor = `rgba(239, 68, 68, ${ (finalRisk-30)/200 })`;
+            } else {
+                riskLevel.innerText = "สูงมาก";
+                riskLevel.parentElement.className = "px-3 py-1 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm flex items-center gap-1 pulse-warning";
+                damageOverlay.style.backgroundColor = `rgba(239, 68, 68, ${ (finalRisk-50)/100 })`;
+            }
+
+            // Fact update based on UV
+            if (uv > 8) factText.innerText = facts[3];
+            else if (melanin > 4) factText.innerText = facts[2];
+            else if (activeProtections > 0) factText.innerText = facts[1];
+            else factText.innerText = facts[0];
+
+            // Penetration update
+            document.getElementById('uva-penetration').innerText = `${Math.round((100-ratio) * (uv/11))}%`;
+            document.getElementById('uvb-penetration').innerText = `${Math.round(ratio * (uv/15))}%`;
+        }
+
+        function toggleProtection(btn) {
+            const isActive = btn.getAttribute('data-active') === 'true';
+            btn.setAttribute('data-active', !isActive);
+            
+            const check = btn.querySelector('.check-icon');
+            if (!isActive) {
+                btn.classList.add('bg-tertiary-container', 'text-on-tertiary-fixed', 'border-tertiary-fixed-dim');
+                check.classList.remove('opacity-0');
+                check.classList.add('opacity-100', 'text-on-tertiary-fixed');
+            } else {
+                btn.classList.remove('bg-tertiary-container', 'text-on-tertiary-fixed', 'border-tertiary-fixed-dim');
+                check.classList.add('opacity-0');
+                check.classList.remove('opacity-100', 'text-on-tertiary-fixed');
+            }
+            updateSimulation();
+        }
+
+        [uvSlider, ratioSlider, melaninSlider].forEach(s => s.addEventListener('input', updateSimulation));
+
+        // Initial setup
+        updateSimulation();
+
+        // Particle generation for melanin
+        const particlesContainer = document.getElementById('melanin-particles');
+        for (let i = 0; i < 48; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'w-1 h-1 bg-orange-950 rounded-full transition-all duration-700';
+            dot.style.opacity = Math.random() * 0.8;
+            particlesContainer.appendChild(dot);
+        }
+    </script>
+</body></html>

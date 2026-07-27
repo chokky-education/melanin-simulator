@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="light" lang="th"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>UV &amp; Melanin Simulator - Comparison Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .sim-canvas-shadow {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<!-- Shared Component Styling Data Injection -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "outline": "#76777d",
+                    "secondary-fixed": "#ffddb8",
+                    "surface-bright": "#f7f9fb",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-high": "#e6e8ea",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#dae2fd",
+                    "on-secondary-fixed": "#2a1700",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#e0e3e5",
+                    "on-surface": "#191c1e",
+                    "inverse-surface": "#2d3133",
+                    "surface-dim": "#d8dadc",
+                    "on-primary-container": "#7c839b",
+                    "on-tertiary-container": "#0c9488",
+                    "primary-container": "#131b2e",
+                    "surface-tint": "#565e74",
+                    "on-tertiary-fixed-variant": "#005049",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary": "#855300",
+                    "primary": "#000000",
+                    "outline-variant": "#c6c6cd",
+                    "on-surface-variant": "#45464d",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#6bd8cb",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "on-tertiary-fixed": "#00201d",
+                    "on-background": "#191c1e",
+                    "primary-fixed-dim": "#bec6e0",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f7f9fb",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "secondary-container": "#fea619",
+                    "on-secondary-container": "#684000",
+                    "tertiary-container": "#00201d",
+                    "error-container": "#ffdad6",
+                    "surface": "#f7f9fb",
+                    "tertiary": "#000000",
+                    "inverse-primary": "#bec6e0",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed": "#131b2e",
+                    "tertiary-fixed": "#89f5e7",
+                    "surface-container": "#eceef0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-lg": "32px",
+                    "gutter": "16px",
+                    "container-padding": "24px",
+                    "unit": "4px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "title-md": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "headline-lg-mobile": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "title-md": ["20px", {"lineHeight": "1.5", "fontWeight": "600"}],
+                    "label-sm": ["13px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="bg-surface-container-lowest dark:bg-primary-container shadow-sm fixed top-0 w-full z-50">
+<nav class="flex justify-between items-center px-container-padding py-stack-md w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary dark:text-tertiary-fixed text-4xl" data-icon="science">science</span>
+<span class="font-display-lg text-display-lg font-bold text-primary dark:text-on-primary-container tracking-tight">UV &amp; Melanin Simulator</span>
+</div>
+<div class="hidden md:flex items-center gap-stack-lg">
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="#">Simulator</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="#">Knowledge Hub</a>
+<a class="font-body-md text-body-md text-primary dark:text-tertiary-fixed font-bold border-b-2 border-primary dark:border-tertiary-fixed pb-1" href="#">Comparison</a>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold active:scale-95 transition-all">Sign In</button>
+</div>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined text-3xl" data-icon="menu">menu</span>
+</button>
+</nav>
+</header>
+<!-- Main Content -->
+<main class="flex-grow pt-32 pb-stack-lg px-container-padding max-w-7xl mx-auto w-full">
+<section class="mb-stack-lg animate-fade-in">
+<h1 class="font-headline-lg text-headline-lg mb-2 text-primary">แดชบอร์ดเปรียบเทียบผลลัพธ์</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">วิเคราะห์ความแตกต่างของผลกระทบจากรังสี UV ระหว่างก่อนและหลังการใช้ตัวช่วยป้องกัน</p>
+</section>
+<!-- Comparison Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-stack-lg items-start">
+<!-- Before Protection Card -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border-2 border-error-container sim-canvas-shadow">
+<div class="flex justify-between items-center mb-stack-md">
+<h2 class="font-title-md text-title-md text-error flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+                        ก่อนป้องกัน
+                    </h2>
+<span class="px-3 py-1 bg-error-container text-on-error-container rounded-full font-label-sm text-label-sm">เสี่ยงสูง</span>
+</div>
+<div class="relative w-full aspect-video rounded-lg overflow-hidden mb-stack-md">
+<img class="w-full h-full object-cover" data-alt="A clinical biological cross-section illustration of human skin cells under intense solar radiation. The skin looks inflamed with high levels of melanin clusters being produced deep in the dermis. The lighting is harsh and warm, simulating high UV intensity in a professional scientific diagram style with deep navy and medical red tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASrnuev8t4AF0q-Vs4xW5clKVuW_4G2sYeuMYdufwCPbemdXl0CfkDKeavRLMZ0nK7_exUCCN_evCTRDckzqoQvCJbJRnOksgqlvX67jh57eZELKVNz2S104cvuwCO9QUysnbGkMqmj-8iz7T4Mumwxzu2TEl_-MOBjcWg7MT0b51VC_rP2dymcOGf3OaWwshTYXPECpOL-_5LCxHXHIFrL8ZSkf1tu7qYUDShsDMEpGfIIeBDxgbX"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<p class="font-label-sm text-label-sm opacity-80 uppercase tracking-widest">Exposure Duration</p>
+<p class="font-title-md text-title-md">120 Minutes</p>
+</div>
+</div>
+<!-- Stats -->
+<div class="space-y-stack-md">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span>Melanin Production Rate</span>
+<span class="text-error">High (+85%)</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-error w-[85%]"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span>Cellular DNA Damage</span>
+<span class="text-error">Critical (72%)</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-error w-[72%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- After Protection Card -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-md border-2 border-on-tertiary-container sim-canvas-shadow">
+<div class="flex justify-between items-center mb-stack-md">
+<h2 class="font-title-md text-title-md text-on-tertiary-container flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+                        หลังป้องกัน
+                    </h2>
+<span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full font-label-sm text-label-sm">ปลอดภัย</span>
+</div>
+<div class="relative w-full aspect-video rounded-lg overflow-hidden mb-stack-md">
+<img class="w-full h-full object-cover" data-alt="A clinical biological illustration showing skin protected by a sunscreen barrier. The skin cells appear calm and healthy with minimal melanin stimulation. A translucent blue-teal protective layer is visible on top of the skin, reflecting incoming sunlight rays. Clean, professional medical aesthetic with soft teal and white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlo5YBiP-8JR7mZzpdsWTXoesIRs6kcBgsWxjhsL1lOWOoGpjCERgo8_K2hJOcuFzENkWoGBAr5G1x01a5ZdlqNkaNolkNoZnjr1qzy9j-JeqRSXsDnNeTCZNxMywA1yDMDzaFC3jKN6UJbgmYyr7RHbxUjN-ehpjl8_8KOtpjM1kgPeeN9s-kwAQILBEWdZRFb6wI5N1h8puyi4hsK7n82eUbU0iLVlXeAXXCq7QOaGA9aYCQRT0p"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+<div class="absolute bottom-4 left-4 text-white">
+<p class="font-label-sm text-label-sm opacity-80 uppercase tracking-widest">Protection: SPF 50+</p>
+<p class="font-title-md text-title-md">Optimal Coverage</p>
+</div>
+</div>
+<!-- Stats -->
+<div class="space-y-stack-md">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span>Melanin Production Rate</span>
+<span class="text-on-tertiary-container">Normal (+12%)</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-on-tertiary-container w-[12%]"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span>Cellular DNA Damage</span>
+<span class="text-on-tertiary-container">Minimal (5%)</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-on-tertiary-container w-[5%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Analysis Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg mt-stack-lg">
+<!-- Summary Text -->
+<div class="md:col-span-2 bg-surface-container-low rounded-xl p-stack-lg">
+<h3 class="font-title-md text-title-md mb-stack-md text-primary">บทวิเคราะห์ทางวิทยาศาสตร์</h3>
+<div class="space-y-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">
+<p>
+                        จากการจำลองสถานการณ์ พบว่าหากไม่มีการป้องกันผิวหนัง รังสี UV จะกระตุ้นการทำงานของ <strong class="text-primary">Melanocytes</strong> อย่างรุนแรง ส่งผลให้มีการสร้างเม็ดสีเมลานินขึ้นมาเพื่อปกป้อง DNA ในนิวเคลียส ซึ่งเป็นสาเหตุหลักของผิวหมองคล้ำและจุดด่างดำ
+                    </p>
+<p>
+                        เมื่อใช้การป้องกัน (SPF 50+ และการหลบแดด) ปริมาณรังสีที่เข้าสู่ชั้นผิวลดลงกว่า <span class="text-on-tertiary-container font-bold text-lg">98%</span> ทำให้กระบวนการผลิตเมลานินอยู่ในระดับปกติ และลดความเสี่ยงของการเกิดการทำลาย DNA ที่อาจนำไปสู่โรคมะเร็งผิวหนังในระยะยาวได้อย่างมีนัยสำคัญ
+                    </p>
+</div>
+</div>
+<!-- Risk Gauge -->
+<div class="bg-surface-container-low rounded-xl p-stack-lg flex flex-col items-center justify-center text-center">
+<h3 class="font-label-sm text-label-sm mb-stack-md text-on-surface-variant uppercase tracking-widest">ดัชนีความต่างของการปกป้อง</h3>
+<div class="relative w-40 h-40 flex items-center justify-center">
+<!-- Circular Gauge placeholder using CSS -->
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-high" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-secondary-container transition-all duration-1000" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="44" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display-lg text-4xl text-primary">9.2</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Risk Reduction Score</span>
+</div>
+</div>
+<p class="mt-4 font-body-md text-body-md text-on-secondary-container">ประสิทธิผลอยู่ในเกณฑ์ดีเยี่ยม</p>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="mt-stack-lg flex flex-col sm:flex-row justify-center gap-stack-md">
+<button class="flex items-center justify-center gap-2 bg-primary text-on-primary px-8 py-4 rounded-xl font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-lg">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span>
+                เริ่มการจำลองใหม่
+            </button>
+<button class="flex items-center justify-center gap-2 border-2 border-primary text-primary px-8 py-4 rounded-xl font-bold hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+                ดาวน์โหลดรายงานสรุป (PDF)
+            </button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-container-highest mt-stack-lg">
+<div class="flex flex-col md:flex-row justify-between items-center px-container-padding py-stack-lg w-full max-w-7xl mx-auto">
+<div class="mb-4 md:mb-0">
+<span class="font-title-md text-title-md text-primary">UV &amp; Melanin Simulator</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-2 max-w-md">
+                    © 2024 UV &amp; Melanin Educational Simulator. เครื่องมือนี้มีวัตถุประสงค์เพื่อการศึกษาเท่านั้น ไม่ใช่การวินิจฉัยทางการแพทย์
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:underline transition-colors" href="#">นโยบายความเป็นส่วนตัว</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:underline transition-colors" href="#">เงื่อนไขการใช้งาน</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:underline transition-colors" href="#">ติดต่อสอบถาม</a>
+</div>
+</div>
+</footer>
+<!-- Simple Interactivity Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate fade in elements
+            const elements = document.querySelectorAll('.animate-fade-in');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(10px)';
+                el.style.transition = `all 0.6s ease-out ${index * 0.1}s`;
+                
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 100);
+            });
+
+            // Smooth interaction for action buttons
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    // Logic for hover micro-interaction if needed beyond tailwind
+                });
+            });
+        });
+    </script>
+</body></html>
